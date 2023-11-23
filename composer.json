@@ -1,0 +1,19 @@
+{
+    "name": "lolihdz/app-salon_php_mvc_js_sass",
+    "description": "Proyect PHP, MVC, SQL, SASS, Gulp",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "MVC\\": "./",
+            "Controllers\\": "./controllers",
+            "Model\\": "./models"
+        }
+    },
+    "authors": [
+        {
+            "name": "Maria Hernandez",
+            "email": "mhernandezv30@gmail.com"
+        }
+    ],
+    "require": {}
+}
