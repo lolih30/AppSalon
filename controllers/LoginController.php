@@ -29,7 +29,10 @@ class LoginController {
         if($_SERVER['REQUEST_METHOD'] === 'POST'){
          $usuario->sincronizar($_POST);
          $alertas = $usuario->validarNuevaCuenta();
- 
+
+         //revisar que alertas esta vacio 
+         if(empty($alertas)){
+            $usuario->existeUsuario();
         }
 
 
@@ -39,6 +42,6 @@ class LoginController {
         ]);
     }
 
-
+    }
 
 }
