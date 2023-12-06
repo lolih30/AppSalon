@@ -37,19 +37,19 @@ class Usuario extends ActiveRecord
     //Mensajes de validacion para la creacion 
     public function validarNuevaCuenta()
     {
-        if(!$this->nombre){
-            self::$alertas['error'][]= 'El nombre es obligatorio';
+        if (!$this->nombre) {
+            self::$alertas['error'][] = 'El nombre es obligatorio';
         }
-        if(!$this->apellido){
-            self::$alertas['error'][]= 'El apellido es obligatorio';
+        if (!$this->apellido) {
+            self::$alertas['error'][] = 'El apellido es obligatorio';
         }
-        if(!$this->email){
-            self::$alertas['error'][]= 'El Email es obligatorio';
+        if (!$this->email) {
+            self::$alertas['error'][] = 'El Email es obligatorio';
         }
-        if(!$this->password){
-            self::$alertas['error'][]= 'El password es obligatorio';
+        if (!$this->password) {
+            self::$alertas['error'][] = 'El password es obligatorio';
         }
-        if(strlen($this->password) < 6 ){
+        if (strlen($this->password) < 6) {
             self::$alertas['error'][] = 'El password debe te terner almenos 6 caracteres';
         }
 
@@ -57,10 +57,15 @@ class Usuario extends ActiveRecord
     }
 
     //revisa si el usuario ya existe 
-    public function existeUsuario(){
-        $query = " SELECT * FROM " . self::$tabla . " WHERE email = '" . $this->email. "' LIMIT 1";
-       
-       $resultado = self::$db;
+    public function existeUsuario()
+    {
+        $query = " SELECT * FROM " . self::$tabla . " WHERE email = '" . $this->email . "' LIMIT 1";
 
+        $resultado = self::$db->query($query);
+
+        if ($resultado->num_rows) {
+            self::$alertas['error'][] = 'El usuario ya esta registrado';
+        }
+        return $resultado;
     }
 }
