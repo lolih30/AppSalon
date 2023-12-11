@@ -43,9 +43,15 @@ class LoginController
                 if ($resultado->num_rows) {
                     $alertas = Usuario::getAlertas();
                 } else {
-                    //no esta registrado
-                    Debuguear('no esta registrado');
+                    
+                    //Hashear el password
+                    $usuario->hashPassword();
+               
                 }
+
+                //generar un token unico 
+                $usuario->crearToken();
+                debuguear($usuario);
             }
         }
 
@@ -54,4 +60,5 @@ class LoginController
             'alertas' => $alertas
         ]);
     }
+ 
 }
