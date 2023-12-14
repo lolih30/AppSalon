@@ -2,8 +2,9 @@
 
 namespace Controllers;
 
-use Model\Usuario;
 use MVC\Router;
+use Classes\Email;
+use Model\Usuario;
 
 class LoginController
 {
@@ -43,22 +44,32 @@ class LoginController
                 if ($resultado->num_rows) {
                     $alertas = Usuario::getAlertas();
                 } else {
-                    
                     //Hashear el password
                     $usuario->hashPassword();
-               
-                }
+                    //generar un token unico 
+                    $usuario->crearToken();
+                    //creare email
+                    $email = new Email($usuario->email, $usuario->nombre, $usuario->token);
+                    $email->enviarConfirmacion();
 
-                //generar un token unico 
-                $usuario->crearToken();
-                debuguear($usuario);
+                    //Crear usuario 
+                    $resultado = $usuario->guardar();
+
+                    if ($resultado) {
+                        header('Location: /mensaje');
+                    }
+                }
             }
         }
+
 
         $router->render('auth/crear-cuenta', [
             'usuario' => $usuario,
             'alertas' => $alertas
         ]);
     }
- 
+
+    public static function mensaje(Router $router){
+        $router->render('auth/mensaje');
+    }
 }

@@ -6,7 +6,7 @@ class Usuario extends ActiveRecord
 {
     //base de datos 
     protected static $tabla = 'usuarios';
-    protected static $columnaDB = [
+    protected static $columnasDB = [
         'id', 'nombre', 'apellido',
         'email', 'password', 'telefono', 'admin', 'confirmado', 'token'
     ];
@@ -29,8 +29,8 @@ class Usuario extends ActiveRecord
         $this->email = $args['email'] ?? '';
         $this->password = $args['password'] ?? '';
         $this->telefono = $args['telefono'] ?? '';
-        $this->admin = $args['admin'] ?? null;
-        $this->confirmado = $args['confirmado'] ?? null;
+        $this->admin = $args['admin'] ?? '0';
+        $this->confirmado = $args['confirmado'] ?? '0';
         $this->token = $args['token'] ?? '';
     }
 
